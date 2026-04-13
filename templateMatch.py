@@ -12,12 +12,12 @@ def rgb_to_gray(image):
     gray = 0.3*r + 0.59*g + 0.11*b
     return gray
 
+def csv_create(method):
+    with open(f'{method}_results.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Frame', 'Min', 'Max'])
 
-
-with open('/home/nick/vscode/PIM/tarefa1/coordinates.csv', 'w', newline=';') as file:
-    writer = csv.writer(file, delimiter=';')
-    writer.writerow([i, min_val, max_val])
-
+    
 def execution():
     if not os.path.exists('./grayframes'):
         os.makedirs('./grayframes')
