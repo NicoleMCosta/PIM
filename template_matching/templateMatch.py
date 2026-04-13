@@ -16,9 +16,11 @@ def method_apply():
     w, h = template.shape[::-1]
 
     for m in methods:
+        #criando pasta para resultados de cada método
         output_folder = f'./results_{m}'
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
+
         for i in os.listdir('./frames'):
             img = cv2.imread(f'./frames/{i}', 0)
 
@@ -29,7 +31,6 @@ def method_apply():
                 result = cv2.matchTemplate(img2, template, method)
                 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
                 
-                # If the method is TM_SQDIFF or TM_SQDIFF_NORMED, take minimum
                 if method in [cv2.TM_SQDIFF, cv2.TM_SQDIFF_NORMED]:
                     top_left = min_loc
                 else:
@@ -39,27 +40,11 @@ def method_apply():
                 #criando e populando o csv de cada método
                 csv_create(m,i, min_val, max_val)
 
+                #plotando imagem resultado e salvando
                 cv2.rectangle(img2,top_left, bottom_right, 255, 2)
-                plt.subplot(121)
-                plt.imshow(result,cmap = 'gray')
-                plt.title('Matching Result')
-                plt.xticks([])
-                plt.yticks([])
+                save_path = f'{output_folder}/res_{i}.jpg'
+                cv2.imwrite(save_path, img2)
+                cv2.destroyAllWindows()
+            
 
-                plt.subplot(122)
-                plt.imshow(img2,cmap = 'gray')
-                plt.title('Detected Point')
-                plt.xticks([])
-                plt.yticks([])
-                plt.suptitle(m)
-                
-                save_path = f'{output_folder}/res_{i}'
-                plt.savefig(save_path)
-                plt.close('all')
-                    
-
-def execution():
-    
-    method_apply()
-
-execution()
+method_apply()
