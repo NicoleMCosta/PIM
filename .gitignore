@@ -1,4 +1,13 @@
 venv/
 limiarizacao/
 
+
 __pycache__/
+graph.py
+*.csv
+*.png
+results_*/
+analysis/*
+graphs/*
+
+log.txt
