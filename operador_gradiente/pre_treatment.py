@@ -29,13 +29,3 @@ def median_blur(image):
                 output[y, x] = int(median_value)
 
     return output
-
-def apply_blur():
-    current_dir = Path(__file__).resolve().parent
-    folder = current_dir / 'images'
-    filter_folder = current_dir / 'filtered' 
-    for img in folder.iterdir():    
-        image = cv2.imread(img, cv2.IMREAD_GRAYSCALE)
-        filtered_img = median_blur(image)
-        post.save_img(filtered_img,f'filtered_{img.stem}', 'filtered')
-    return folder, filter_folder

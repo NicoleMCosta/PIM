@@ -1,43 +1,38 @@
 import numpy as np
 
+
 def dir_grad(gy, gx):
     return np.arctan2(gy,gx)
 
 def max_locais(magnitude, direcao):
-    maximos = np.zeros(magnitude.shape, dtype=np.float32)
-    
+    maximos = np.zeros_like(magnitude)
+
     angulo = np.rad2deg(direcao)
+    angulo[angulo < 0] += 180
+
     linhas, colunas = magnitude.shape
-    
-    for i in range(1, linhas - 1):
-        for j in range(1, colunas - 1):
-            vizinho_1 = 0
-            vizinho_2 = 0
-            
-            # diagonal superior direita e inferior esquerda
-            if (22.5 < angulo[i,j]<= 67.5) or (-157.5<= angulo[i,j] < -122.5):
-                vizinho_1 = magnitude[i-1,j+1]
-                vizinho_2 = magnitude[i+1,j-1]
 
-            # vertical 
-            elif (67.5 < angulo[i,j]<= 112.5) or (-112.5 <= angulo[i,j] < -67.5):
-                vizinho_1 = magnitude[i-1,j]
-                vizinho_2 = magnitude[i+1,j]
 
-            # diagonal superior esquerda e inferior direita
-            elif (112.5 < angulo[i,j] <= 157.5) or (-67.5 <= angulo[i,j] < -22.5):
-                vizinho_1 = magnitude[i-1,j-1]
-                vizinho_2 = magnitude[i+1,j+1]
+    for i in range(1, linhas-1):
+        for j in range(1, colunas-1):
+            ang = angulo[i,j]
+            atual = magnitude[i,j]
 
-            # horizontal
+            if (0 <= ang < 22.5) or (157.5 <= ang <= 180):
+                n1 = magnitude[i,j-1]
+                n2 = magnitude[i,j+1]
+            elif 22.5 <= ang < 67.5:
+                n1 = magnitude[i-1,j+1]
+                n2 = magnitude[i+1,j-1]
+            elif 67.5 <= ang < 112.5:
+                n1 = magnitude[i-1,j]
+                n2 = magnitude[i+1,j]
             else:
-                vizinho_1 = magnitude[i,j-1]
-                vizinho_2 = magnitude[i,j+1]
+                n1 = magnitude[i-1,j-1]
+                n2 = magnitude[i+1,j+1]
 
-            if (magnitude[i, j] >= vizinho_1) and (magnitude[i, j] >= vizinho_2):
-                maximos[i, j] = magnitude[i, j]
-            else:
-                maximos[i, j] = 0
+            if atual >= n1 and atual >= n2:
+                maximos[i,j] = atual
 
     return maximos
 
@@ -57,5 +52,5 @@ def prewitt_scharr(image,kernel_x, kernel_y):
             magnitude[linha, coluna] = np.sqrt(gx[linha, coluna]**2 + gy[linha, coluna]**2)
     
     dir = dir_grad(gy,gx)
-    maximos= max_locais(magnitude, dir)    
+    maximos= max_locais(magnitude, dir)
     return maximos

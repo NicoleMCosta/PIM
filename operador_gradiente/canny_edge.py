@@ -5,9 +5,9 @@ from pathlib import Path
 from PIL import Image
 import post_treatment as post
 
+current_dir = Path(__file__).resolve().parent
+
 def canny_apply():
-    #alteração para ler as imagens de teste da atividade
-    current_dir = Path(__file__).resolve().parent
     folder = current_dir / 'images'
     for img in folder.iterdir():
         image = np.array(Image.open(img).convert('L'))
