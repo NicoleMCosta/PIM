@@ -6,13 +6,15 @@ from pathlib import Path
 import post_treatment as post
 
 def compare():
-    folder = Path('./operador_gradiente/images')
+    current_dir = Path(__file__).resolve().parent
+    folder = current_dir / 'images'
+
     for i in folder.iterdir():
         img = cv2.imread(str(i), 0)
-        imgprewit = cv2.imread(f'./operador_gradiente/prewitt/{i.stem}.png',0)
-        imgscharr = cv2.imread(f'./operador_gradiente/scharr/{i.stem}.png', 0)
-        imgcanny = cv2.imread(f'./operador_gradiente/canny/sigma1{i.stem}.png',0)
-        imgcanny3 = cv2.imread(f'./operador_gradiente/canny/sigma3{i.stem}.png',0)
+        imgprewit = cv2.imread(f'{current_dir}/prewitt/{i.stem}.png',0)
+        imgscharr = cv2.imread(f'{current_dir}/scharr/{i.stem}.png', 0)
+        imgcanny = cv2.imread(f'{current_dir}/canny/sigma1{i.stem}.png',0)
+        imgcanny3 = cv2.imread(f'{current_dir}/canny/sigma3{i.stem}.png',0)
 
         mse_img = mean_squared_error(img, img)
         ssim_img = ssim(img, img, data_range=img.max() - img.min())

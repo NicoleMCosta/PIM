@@ -9,10 +9,7 @@ from pathlib import Path
 import numpy as np
 
 def execute(name, x, y):
-    pret.apply_blur()
-    current_dir = Path(__file__).resolve().parent
-    folder = current_dir / 'images'
-    filter_folder = current_dir / 'filtered'
+    folder, filter_folder = pret.apply_blur()
     for img in folder.iterdir():
         image = cv2.imread(img, cv2.IMREAD_GRAYSCALE)
         filtered_img = cv2.imread(f'{filter_folder}/filtered_{img.stem}.png', cv2.IMREAD_GRAYSCALE)
