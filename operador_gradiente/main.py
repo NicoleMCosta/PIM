@@ -31,6 +31,7 @@ def execute(name, x, y):
         ax[2].set_title(f'{name}', fontsize=12)
 
         post.save_plot(f'{name}_{img.stem}', 'results')
+        plt.close()
 
 def main():
     prewitt_x = np.array([[-1, 0, 1], 

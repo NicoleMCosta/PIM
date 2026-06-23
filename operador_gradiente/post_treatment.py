@@ -10,7 +10,6 @@ def save_plot(name, folder):
 
     full_path = output_dir/f'{name}.png'
     plt.savefig(full_path, dpi=300, bbox_inches='tight')
-    plt.close()
 
 def save_img(img, name, folder):
     project_dir = Path(__file__).parent

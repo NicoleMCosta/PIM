@@ -32,7 +32,7 @@ def compare():
         ssim_canny3 = ssim(img, imgcanny3, data_range=imgcanny3.max() - imgcanny3.min() )
 
 
-        fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(30, 10))
+        fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(10, 30))
         ax = axes.ravel()
 
         ax[0].imshow(img, cmap=plt.cm.gray, vmin=0, vmax=255)
@@ -59,6 +59,3 @@ def compare():
         plt.tight_layout()
         post.save_plot(f'compara_{i.stem}', 'comparing')
         plt.show()
-        plt.close()
-    
-compare()
