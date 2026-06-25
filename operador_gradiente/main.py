@@ -42,21 +42,21 @@ def main():
                         [-1, 0, 1], 
                         [-1, 0, 1]], dtype=np.float32)
 
-    prewitt_y = np.array([[1, 1, 1], 
+    prewitt_y = np.array([[-1, -1, -1], 
                         [ 0,  0,  0], 
-                        [ -1,  -1,  -1]], dtype=np.float32)
+                        [ 1,  1,  1]], dtype=np.float32)
 
     scharr_x = np.array([[-3, 0, 3], 
                         [-10, 0, 10], 
                         [-3, 0, 3]], dtype=np.float32)
 
-    scharr_y = np.array([[+3, +10, +3], 
+    scharr_y = np.array([[-3, -10, -3], 
                         [ 0,  0,  0], 
-                        [ -3,  -10,  -3]], dtype=np.float32)
+                        [ 3,  10,  3]], dtype=np.float32)
 
-    execute('prewitt', prewitt_x, prewitt_y)
-    execute('scharr', scharr_x, scharr_y)
-    ced.canny_apply()
+    # execute('prewitt', prewitt_x, prewitt_y)
+    # execute('scharr', scharr_x, scharr_y)
+    # ced.canny_apply()
     ssim.compare()
 
 
